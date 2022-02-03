@@ -17,7 +17,6 @@ const PokemonAbilities = ({abilityName, hidden, slotNum, url}) => {
         getAbilityInfo()
     }, [])
 
-    console.log(abilityCard)
     return (
         <Col>
             <Card
@@ -41,8 +40,8 @@ const PokemonAbilities = ({abilityName, hidden, slotNum, url}) => {
                     Slot# {slotNum} 
                 </CardSubtitle>
                 <CardText>
-                    {abilityCard && abilityCard.effect_entries.map( el => {
-                        if(el.language.name == 'en') return <p>{el.effect}</p>
+                    {abilityCard && abilityCard.effect_entries.map( (el, idx) => {
+                        if(el.language.name == 'en') return <p key={idx}>{el.effect}</p>
                     })}
                 </CardText>
                 </CardBody>

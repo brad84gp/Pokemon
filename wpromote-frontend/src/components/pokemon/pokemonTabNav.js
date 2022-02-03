@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Nav, NavLink, NavItem, TabContent, TabPane, Col, Row, 
-    Card, CardTitle, CardText, Button, CardBody, CardSubtitle } from "reactstrap";
+import { Nav, NavLink, NavItem, TabContent, TabPane, Row, Table } from "reactstrap";
 import PokemonAbilities from "./pokemonAbilites";
+import PokemonGameIndex from "./pokemonGameIndex";
+import PokemonItems from "./pokemonItems";
 import PokemonMoves from "./pokemonMoves";
 
 
@@ -34,7 +35,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <NavItem>
                 <NavLink
                     className=""
-                    onClick={function noRefCheck(){}}
+                    onClick={() => setActiveTab("3")}
                 >
                     Game Index
                 </NavLink>
@@ -42,7 +43,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <NavItem>
                 <NavLink
                     className=""
-                    onClick={function noRefCheck(){}}
+                    onClick={() => setActiveTab("4")}
                 >
                     Items Held
                 </NavLink>
@@ -64,7 +65,45 @@ const PokemonTabNav = ({pokemon}) => {
 
                    {pokemon && (
                        <Row>
-                           {<PokemonMoves />}
+                           {pokemon.moves.map((el, idx) => (
+                                <PokemonMoves key={idx} name={el.move.name} movesUrl={el.move.url}/>
+                            ))}
+                       </Row>
+                   )}
+
+                </TabPane>
+                <TabPane tabId="3">
+
+                   {pokemon && (
+                       <Row>
+                           <Table striped bordered style={{textAlign :  'center'}}>
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Game Index
+                                        </td>
+                                        <td>
+                                            Version Name
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {pokemon.game_indices.map((el, idx) => (
+                                    <PokemonGameIndex key={idx} gameIndex={el.game_index} version={el.version.name}/>
+                                ))}
+                                </tbody>
+                            </Table>
+                       </Row>
+                   )}
+
+                </TabPane>
+                <TabPane tabId="4">
+
+                   {pokemon && (
+                       <Row>
+                           {pokemon.held_items.map((el, idx) => (
+                                <PokemonItems key={idx} itemUrl={el.item.url} />
+                            ))}
                        </Row>
                    )}
 

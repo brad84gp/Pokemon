@@ -25,32 +25,46 @@ class PokemonApi {
     }
 
     static async fetchAllPokemon(num){
-        let cacheRes = PokemonCache.checkCache(`pokemon?offset=${num}&limit=50`)
-        console.log(cacheRes)
+        
+        const current = this.request(`pokemon?offset=${num}&limit=20`)
+        const next = this.request(`pokemon?offset=${num + 20}&limit=20`)
+        const prev = this.request(`pokemon?offset=${num - 20}&limit=20`)
+        
+        const allPromises = Promise.all([current, next, prev])
 
-        if(cacheRes) return cacheRes
-        else{
-            const response = await this.request(`pokemon?offset=${num}&limit=50`)
-            if(response.status === 200) {
-                PokemonCache.addToCache(`pokemon?offset=${num}&limit=50`, response.data)
-                return response.data
-            }
+        let values = await allPromises
+     
+        let pokemonObj = {
+            'prev' : values[2].data.results,
+            'curr' : values[0].data.results,
+            'next' : values[1].data.results
         }
+
+        return pokemonObj
     }
 
     static async fetchPokemonData(id){
-        let checkOffsetCache = OffsetCache.checkCache(`pokemon/${id}`)
-
-        if(checkOffsetCache) return checkOffsetCache
-        else {
-            const response = await this.request(`pokemon/${id}`)
-            OffsetCache.addToCache(`pokemon/${id}`, response)
-            return response
-        }
+        const response = await this.request(`pokemon/${id}`)
+        if(response.status === 200) return response.data
     }
 
     static async fetchPokemonAbilityData(id){
         const response = await this.request(`ability/${id}`)
+        if(response.status === 200) return response.data
+    }
+
+    static async fetchPokmonMoves(id){
+        const response = await this.request(`move/${id}`)
+        if(response.status === 200) return response.data
+    }
+
+    static async fetchPokemonItems(id){
+        const response = await this.request(`item/${id}`)
+        if(response.status === 200) return response.data
+    }
+
+    static async fetchPokemonAttrInfo(id){
+        const response = await this.request(`item-attribute/${id}`)
         if(response.status === 200) return response.data
     }
 

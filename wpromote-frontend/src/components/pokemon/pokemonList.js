@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import { Card, CardTitle, CardImg, CardImgOverlay, Col } from "reactstrap";
+import { Card, CardTitle, CardImg, CardImgOverlay, Col, Button } from "reactstrap";
 import PokemonApi from "../../API/pokemonApi";
 
 
@@ -9,32 +9,32 @@ const PokemonList = ({name}) => {
    
     const navigate = useNavigate();
 
-    const [pokemonInfo, setPokemonInfo] = useState()
+    const [pokemonData, setPokemonData] = useState()
 
-    useEffect(() => {
-        async function getPokemonInfo(){
+    useEffect(() =>{
+        async function getData(){
             let response = await PokemonApi.fetchPokemonData(name)
-            setPokemonInfo(response.data)
+            setPokemonData(response)
         }
-
-        getPokemonInfo()
-    }, [])
+        getData()
+    }, [name])
 
     function handleClick(){
-        return navigate(`/pokemon/${pokemonInfo.name}`, { state : { pokemon : pokemonInfo }})
+        return navigate(`/pokemon/${name}`, { state : { pokemon : pokemonData}})
     }
 
+    if(!pokemonData) return <div />
     return (
         <Col lg="4" md="6" xs="12">
             <Card inverse id="pokeCard" onClick={handleClick}>
                 <CardImg
                     alt="Card image cap"
-                    src={pokemonInfo && pokemonInfo.sprites.other.dream_world.front_default}
+                    src={pokemonData.sprites.other.dream_world.front_default}
                     id="pokeImg"
                 />
                 <CardImgOverlay>
                     <CardTitle id="pokeName">
-                    {pokemonInfo && pokemonInfo.name}
+                    {name}
                     </CardTitle>
                 </CardImgOverlay>
             </Card>

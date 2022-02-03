@@ -1,0 +1,15 @@
+#itemsUL{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+#itemsUL Table{
+    display: flex;
+    margin: auto;
+    
+}
+
+#itemsUL Table tr td{
+    width: max-content;
+    text-align: center;  
+}
