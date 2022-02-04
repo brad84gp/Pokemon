@@ -101,3 +101,10 @@ body{
     left: 35%;
     top: 10%;
 }
+
+
+#btns{
+    display: flex;
+    margin: 1em auto;
+    justify-content: space-around;
+}

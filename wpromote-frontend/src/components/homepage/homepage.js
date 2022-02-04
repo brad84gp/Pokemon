@@ -104,6 +104,7 @@ const HomePage = () => {
                     
                     })}
                 </Row>
+                <a href="https://icons8.com/icon/mqLrsbZsiolV/like">Like icon by Icons8</a>
             </Container>
         </div>
     )

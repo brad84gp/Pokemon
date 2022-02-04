@@ -1,9 +1,15 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
-const NavBar = (loggedIn) => {
 
+
+const NavBar = ({loggedIn}) => {
+
+    useEffect(() =>{
+
+    }, [loggedIn])
+    
     if(!loggedIn){
         return (
             <div>
