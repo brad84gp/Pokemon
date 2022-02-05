@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Nav, NavLink, NavItem, TabContent, TabPane, Row, Table } from "reactstrap";
 import PokemonAbilities from "./pokemonAbilites";
 import PokemonGameIndex from "./pokemonGameIndex";
-import PokemonItems from "./pokemonItems";
+import PokemonItems from "../pokemon/pokemonItems/pokemonItems";
 import PokemonMoves from "./pokemonMoves";
+import './pokemonCardInfo.css'
 
 
 
@@ -53,7 +54,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <TabPane tabId="1">
 
                     {pokemon && (
-                        <Row>
+                        <Row id="abilitiesrow">
                             {pokemon.abilities.map((el, idx) => (
                                 <PokemonAbilities key={idx} abilityName={el.ability.name} hidden={el.is_hidden} slotNum={el.slot} url={el.ability.url}/>
                             ))}
@@ -64,7 +65,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <TabPane tabId="2">
 
                    {pokemon && (
-                       <Row>
+                       <Row id="movesrow">
                            {pokemon.moves.map((el, idx) => (
                                 <PokemonMoves key={idx} name={el.move.name} movesUrl={el.move.url}/>
                             ))}
@@ -75,7 +76,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <TabPane tabId="3">
 
                    {pokemon && (
-                       <Row>
+                       <Row id="indexrow">
                            <Table striped bordered style={{textAlign :  'center'}}>
                                 <thead>
                                     <tr>
@@ -100,7 +101,7 @@ const PokemonTabNav = ({pokemon}) => {
                 <TabPane tabId="4">
 
                    {pokemon && (
-                       <Row>
+                       <Row id="itemsrow">
                            {pokemon.held_items.map((el, idx) => (
                                 <PokemonItems key={idx} itemUrl={el.item.url} />
                             ))}

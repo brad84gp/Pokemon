@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input, Form } from "reactstrap";
+import { Button, Input, Form, InputGroup } from "reactstrap";
 
 
 function FindPokemon({update}){
@@ -13,14 +13,16 @@ function FindPokemon({update}){
 
     function handleChange(evt){
         let searchVal = evt.target.value
-        if(searchVal.length == 0) updatePokemonList(searchVal)
+        if(searchVal.length == 0) updatePokemonList('')
     }
 
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <Input type="text" onChange={handleChange}></Input>
-                <Button>Submit</Button>
+                <InputGroup>
+                    <Input type="text" onChange={handleChange} />
+                    <Button color="primary">Submit</Button>
+                </InputGroup>
             </Form>
         </div>
 

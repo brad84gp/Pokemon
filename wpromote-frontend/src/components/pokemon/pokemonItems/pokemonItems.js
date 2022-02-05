@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, CardImg, Table, Col, CardFooter } from "reactstrap";
 import './pokemonItems.css'
 
-import PokemonApi from "../../API/pokemonApi";
+import PokemonApi from "../../../API/pokemonApi";
 import PokemonItemAttributes from "./pokemonItemAttibutes";
 
 

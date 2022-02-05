@@ -1,11 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { Form, FormGroup, Label, Input, Button,  } from "reactstrap";
 import AppAPI from "../../API/appApi";
-import pokemonContext from "../../context/context";
+import { PersistState } from "../../CACHE/cache";
+import PokemoneContext from "../../context/context";
 
 const LoginForm = () => {
 
-    const { setAppState } = React.useContext(pokemonContext)
+    const { setAppState } = React.useContext(PokemoneContext)
+
+    const navigate = useNavigate()
 
     async function handleSubmit(evt){
         evt.preventDefault()
@@ -17,14 +21,15 @@ const LoginForm = () => {
         }
         
         let response = await AppAPI.loginUser(data)
-        localStorage.setItem("state", JSON.stringify({
-            'loggedIn' : true,
-            'UserData' : { 
-                "pk" : response[0].pk,
-                "data" : response[0].fields
-            }
-        }))
-        console.log(localStorage.getItem("state"))
+        let userData = {
+            "loggedIn" : true,
+            "pk" : response[0].pk,
+            "userData" : response[0].fields
+        }
+        localStorage.setItem("state" , JSON.stringify(userData))
+        setAppState(userData)
+        navigate("/")
+
 
         
     }

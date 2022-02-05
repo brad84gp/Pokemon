@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import PokemonApi from '../../API/pokemonApi'
+import PokemonApi from '../../../API/appApi'
 
 
 const PokemonItemAttributes = ({attrName, attrUrl}) => {

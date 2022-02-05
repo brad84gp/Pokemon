@@ -33,7 +33,8 @@ class UserInfo:
             body = json.loads(body_unicode)
             user = User.objects.filter(id=body['pk'])
             user.update(firstname = body['firstname'], lastname = body['lastname'], username = body['username'], email = body['email'])
-            return HttpResponse()
+            updatedUser = User.objects.get(id=body['pk'])
+            return JsonResponse(serialize('json', [updatedUser]), safe=False)
 
     @csrf_exempt
     def deleteUser(request):

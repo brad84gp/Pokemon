@@ -12,3 +12,35 @@
     border-left: 2px solid black;
     border-top: 2px solid black;
 }
+
+
+
+#itemsrow, #abilitiesrow, #movesrow, #indexrow{
+    height: 700px;
+}
+
+#movesrow{
+    overflow-y: scroll;
+}
+
+#movesrow::-webkit-scrollbar{
+    visibility: hidden;
+}
+
+@media screen and (min-width: 900px) {
+    #itemsrow, #abilitiesrow, #movesrow, #indexrow{
+        height: 800px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #itemsrow, #abilitiesrow, #movesrow, #indexrow{
+        height: 1000px;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    #itemsrow, #abilitiesrow, #movesrow, #indexrow{
+        height: 100vh;
+    }
+}

@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { Card, CardTitle, CardImg, CardImgOverlay, Col, Button } from "reactstrap";
 
-
-import AppAPI from "../../API/appApi";
 import PokemonApi from "../../API/pokemonApi";
 
-import PokemonLike from './pokemonListLike'
+import FavoriteButton from "./pokemonLikes/pokemonFavorite";
+import PokemonDislike from "./pokemonLikes/pokemonListDislike";
+import PokemonLike from './pokemonLikes/pokemonListLike'
+
+import PokemoneContext from "../../context/context";
 
 const PokemonList = ({name}) => {
 
-    const localState = JSON.parse(localStorage.getItem("state"))
-   
-
+    const { appState } = React.useContext(PokemoneContext)
 
     const navigate = useNavigate();
-
-
 
     const [pokemonData, setPokemonData] = useState()
 
@@ -29,24 +27,9 @@ const PokemonList = ({name}) => {
         getData()
     }, [name])
 
-
-
-
-
     function handleClick(){
         return navigate(`/pokemon/${name}`, { state : { pokemon : pokemonData}})
     }
-
-
-
-    async function handleFavorite(evt){
-        await AppAPI.addFavorite({
-        "pk" : localState.UserData.pk,
-        "pokemon" : name
-        })
-    }
-
-
 
     if(!pokemonData) return <div />
     return (
@@ -63,12 +46,6 @@ const PokemonList = ({name}) => {
                     </CardTitle>
                 </CardImgOverlay>
             </Card>
-            <ul id="btns">
-                <PokemonLike pokemon={name}/>
-                {localState.loggedIn ? <Button id="favbtn" color="success" onClick={handleFavorite}> Favorite</Button>
-                    : null}
-                <Button id="dislikebtn" color="danger">Dislike 2</Button>           
-            </ul>
         </Col>
     )
 }

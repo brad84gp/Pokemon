@@ -3,7 +3,7 @@ import { Col, Card, CardBody, CardTitle, CardSubtitle, CardText } from "reactstr
 import PokemonApi from "../../API/pokemonApi";
 
 
-const PokemonAbilities = ({abilityName, hidden, slotNum, url}) => {
+const PokemonAbilities = ({abilityName, slotNum, url}) => {
 
     const [abilityCard, setAbilityCard] = useState()
 
@@ -22,17 +22,12 @@ const PokemonAbilities = ({abilityName, hidden, slotNum, url}) => {
             <Card
                 body
                 color="info"
+                style={{margin : '2em'}}
             >
                 <CardBody>
                 <CardTitle tag="h5">
                     {abilityName}
                 </CardTitle>
-                <CardSubtitle
-                    className="mb-2 text-muted"
-                    tag="h6"
-                >
-                    Hidden? : {hidden}
-                </CardSubtitle>
                 <CardSubtitle
                     className="mb-2 text-muted"
                     tag="h6"

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext  } from "react";
+import { useNavigate } from "react-router";
 import { Form, FormGroup, Label, Input, Button,  } from "reactstrap";
 import AppAPI from "../../API/appApi";
-import pokemonContext from "../../context/context";
+
+import PokemoneContext from "../../context/context";
 
 
 const RegisterForm = () => {
 
-    const { setAppState } = React.useContext(pokemonContext)
+    const { setAppState } = React.useContext(PokemoneContext)
+
+    const navigate = useNavigate()
 
     async function handleSubmit(evt){
         evt.preventDefault()
@@ -17,13 +21,14 @@ const RegisterForm = () => {
         }
         
         let response = await AppAPI.createUser(data)
-        setAppState({
-            'loggedIn' : true,
-            'UserData' : { 
-                "pk" : response[0].pk,
-                "data" : response[0].fields
-            }
-        })
+        let userData = {
+            "loggedIn" : true,
+            "pk" : response[0].pk,
+            "userData" : response[0].fields
+        }
+        localStorage.setItem("state" , JSON.stringify(userData))
+        setAppState(userData)
+        navigate("/")
     }
 
     return (

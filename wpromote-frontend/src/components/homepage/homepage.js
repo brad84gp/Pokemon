@@ -8,15 +8,16 @@ import PokemonList from "../pokemon/pokemonList";
 import FindPokemon from "../forms/searchPokemon";
 
 
-
 const HomePage = () => {
 
     const [pokemon, setPokemon] = useState()
+
 
     const [offset, setOffset] = useState(0)
 
     useEffect(() => {
         async function getPokemon(){
+            console.log(offset)
             let response = await PokemonApi.fetchAllPokemon(offset)
             setPokemon(response)
         }
@@ -26,12 +27,12 @@ const HomePage = () => {
 
 
     async function updatePokemonList(pokemonStr){
-        if(pokemonStr.length > 0){
+        if(pokemonStr.length > 1){
             let response = await PokemonApi.fetchPokemonData(pokemonStr)
-            setPokemon([response.data])
+            setPokemon([response])
         }else{
             let response = await PokemonApi.fetchAllPokemon(offset)
-            setPokemon(response.results)
+            setPokemon(response)
         }
     }
 
@@ -41,37 +42,19 @@ const HomePage = () => {
 
     function previousPage(){
         if(offset === 0) return null
-        if(pokemon.prev != null){
-            setPokemon({
-                'prev' : null,
-                'curr' : pokemon.prev,
-                'next' : pokemon.curr
-            })
-        }else{
-            setOffset(offset - 40)
-        }
+        setOffset(offset - 10)
     }
 
     function nextPage(){
         if(offset > 1118) return null
-        if(pokemon.next != null){
-            setPokemon({
-                'prev' : pokemon.curr,
-                'curr' : pokemon.next,
-                'next' : null
-            })
-        }else{
-            
-        setOffset(offset + 40)
-        }
+        setOffset(offset + 10)
     }
 
     function lastPage(){
-        if(offset != 1118 - 20) setOffset(1118 - 20)
+        if(offset != 1118 - 10) setOffset(1118 - 10)
     }
 
 
-    console.log(pokemon)
 
     if(!pokemon) return <div />
     return (
@@ -82,7 +65,7 @@ const HomePage = () => {
                 </Row>
 
                 <Row>
-                    <Pagination size="lg" aria-label="Page naviagtion" style={{position : 'relative', display : 'flex', justifyContent : ' center'}}>
+                    <Pagination size="lg" aria-label="Page naviagtion" style={{position : 'relative', display : 'flex', justifyContent : ' center', marginTop : '3em'}}>
                         <PaginationItem>
                             <PaginationLink first onClick={firstPage}/>
                         </PaginationItem>
@@ -99,12 +82,11 @@ const HomePage = () => {
                 </Row>
                 
                 <Row>
-                    {pokemon.curr.map((el, idx) => {
-                        return <PokemonList key={idx} name={el.name} />
+                    {pokemon.map((el, idx) => {
+                        return <PokemonList key={idx} name={el.name}  />
                     
                     })}
                 </Row>
-                <a href="https://icons8.com/icon/mqLrsbZsiolV/like">Like icon by Icons8</a>
             </Container>
         </div>
     )

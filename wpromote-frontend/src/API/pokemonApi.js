@@ -2,13 +2,13 @@ const axios = require("axios")
 
 const BASE_URL = 'https://pokeapi.co/api/v2'
 
-const { PokemonCache, OffsetCache } = require('.././CACHE/cache')
+const { PokemonCache } = require('.././CACHE/cache')
 
 class PokemonApi {
 
 
     static async request(url, data = {}, method = 'GET'){
-        console.log(BASE_URL + url, data, method)
+        console.log('getting pokemon')
         try{
             return await axios({
                 method : method,
@@ -25,22 +25,14 @@ class PokemonApi {
     }
 
     static async fetchAllPokemon(num){
+        let cacheCheck = PokemonCache.checkCache(`pokemon?offset=${num}&limit=10`)
         
-        const current = this.request(`pokemon?offset=${num}&limit=20`)
-        const next = this.request(`pokemon?offset=${num + 20}&limit=20`)
-        const prev = this.request(`pokemon?offset=${num - 20}&limit=20`)
-        
-        const allPromises = Promise.all([current, next, prev])
-
-        let values = await allPromises
-     
-        let pokemonObj = {
-            'prev' : values[2].data.results,
-            'curr' : values[0].data.results,
-            'next' : values[1].data.results
+        if(cacheCheck) return cacheCheck
+        else{
+            const response = await this.request(`pokemon?offset=${num}&limit=10`)
+            PokemonCache.addToCache(`pokemon?offset=${num}&limit=10`, response.data.results)
+            return response.data.results
         }
-
-        return pokemonObj
     }
 
     static async fetchPokemonData(id){

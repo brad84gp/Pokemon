@@ -21,7 +21,7 @@ const PokemonMoves = ({name, movesUrl}) => {
     if(!pokemonMoves) return <div />
 
     return (
-        <Col sm="4" xs="6">
+        <Col lg="6" xs="12" style={{display : 'flex', justifyContent : 'start', margin : 'auto'}}>
             <Button
                 color="primary"
                 onClick={() => setIsOpen(!isOpen)}

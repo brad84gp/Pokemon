@@ -1,20 +1,18 @@
 
 
-// let pokemonCache = {}
+let pokemonCache = {}
 
+class PokemonCache {
 
+    static checkCache(searchStr){
+        if(pokemonCache[searchStr])return pokemonCache[searchStr] 
+    }
 
-// class PokemonCache {
+    static addToCache(searchStr, contents){
+        pokemonCache[searchStr] = contents
+    }
 
-//     static checkCache(searchStr){
-//         if(pokemonCache[searchStr]) return pokemonCache[searchStr] 
-//     }
-
-//     static addToCache(searchStr, contents){
-//         pokemonCache[searchStr] = contents
-//     }
-
-// }
+}
 
 
 
@@ -34,7 +32,4 @@
 
 // }
 
-
-
-
-module.exports = {  }
+module.exports = { PokemonCache }
