@@ -1,23 +1,14 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import { Card, CardTitle, CardImg, CardImgOverlay, Col, Button } from "reactstrap";
+import { Card, CardTitle, CardImg, CardImgOverlay, Col } from "reactstrap";
 
 import PokemonApi from "../../API/pokemonApi";
 
-import FavoriteButton from "./pokemonLikes/pokemonFavorite";
-import PokemonDislike from "./pokemonLikes/pokemonListDislike";
-import PokemonLike from './pokemonLikes/pokemonListLike'
-
-import PokemoneContext from "../../context/context";
-
 const PokemonList = ({name}) => {
-
-    const { appState } = React.useContext(PokemoneContext)
 
     const navigate = useNavigate();
 
     const [pokemonData, setPokemonData] = useState()
-
 
     useEffect(() =>{
         async function getData(){
@@ -28,8 +19,8 @@ const PokemonList = ({name}) => {
     }, [name])
 
     function handleClick(){
-        return navigate(`/pokemon/${name}`, { state : { pokemon : pokemonData}})
-    }
+        return navigate(`/pokemon/${name}`, { state : { pokemon : pokemonData}}) // fetches data for each pokemon upon card creation, sends data upon navigation change when card is clicked
+    }                                                                            // follow to pokemoncard component 
 
     if(!pokemonData) return <div />
     return (

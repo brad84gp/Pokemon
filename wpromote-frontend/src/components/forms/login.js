@@ -20,7 +20,7 @@ const LoginForm = () => {
             data[item.name] = item.value
         }
         
-        let response = await AppAPI.loginUser(data)
+        let response = await AppAPI.loginUser(data) // LOGINS a user and saves their data locally if success
         let userData = {
             "loggedIn" : true,
             "pk" : response[0].pk,

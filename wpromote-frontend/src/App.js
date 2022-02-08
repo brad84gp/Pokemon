@@ -19,7 +19,7 @@ function App(){
       })
 
     useEffect(() =>{
-      if(localStorage.getItem("state")) setAppState(JSON.parse(localStorage.getItem("state")))
+      if(localStorage.getItem("state")) setAppState(JSON.parse(localStorage.getItem("state"))) // Using state upon reload if it exists, if not, defautl state used.
     }, [])
 
     console.log(appState)

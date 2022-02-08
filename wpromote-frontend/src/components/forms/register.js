@@ -20,8 +20,8 @@ const RegisterForm = () => {
             data[item.name] = item.value
         }
         
-        let response = await AppAPI.createUser(data)
-        let userData = {
+        let response = await AppAPI.createUser(data) // REGISTERS a user, and saves information locally upon success
+        let userData = {                             // userdata is the state stored
             "loggedIn" : true,
             "pk" : response[0].pk,
             "userData" : response[0].fields

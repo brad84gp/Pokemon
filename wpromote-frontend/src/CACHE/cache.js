@@ -1,4 +1,5 @@
-
+// CACHE is just a javascript object that holds the keys as the search string and the results as the value.
+// checked before each new pokemon fetch call. If it exists, it is returned, if not, it is created
 
 let pokemonCache = {}
 
@@ -13,23 +14,5 @@ class PokemonCache {
     }
 
 }
-
-
-
-
-// let pokemonCacheOffset = {}
-
-
-// class OffsetCache {
-
-//     static checkCache(searchStr){
-//         if(pokemonCacheOffset[searchStr]) return pokemonCacheOffset[searchStr] 
-//     }
-
-//     static addToCache(searchStr, contents){
-//         pokemonCacheOffset[searchStr] = contents
-//     }
-
-// }
 
 module.exports = { PokemonCache }

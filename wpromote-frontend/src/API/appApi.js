@@ -1,4 +1,6 @@
+// API built to connect to DJango backend. These connect to a custom CRUD API setup. Look to backend for adjustments. 
 
+// axios, async, and await are all used to fire events asycnhronously
 
 const axios = require("axios")
 

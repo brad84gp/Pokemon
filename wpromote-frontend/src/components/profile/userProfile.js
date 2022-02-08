@@ -24,20 +24,20 @@ const UserProfile = () => {
             data[item.name] = item.value
         }
         
-        let response = await AppAPI.updateUser(data)
+        let response = await AppAPI.updateUser(data) // Handle submit function sets the form information and sends infromation to CRUD api for upating with PATCH method.
         let userData = {
             "loggedIn" : appState.loggedIn,
             "pk" : appState.pk,
             "userData" : response[0].fields
         }
-        localStorage.setItem("state" , JSON.stringify(userData))
+        localStorage.setItem("state" , JSON.stringify(userData)) // STORE data locally for each session for login persistance upon each refresh
         setAppState(userData)
         navigate("/profile")
 
     }
 
     async function handleDelete(){
-        let response = await AppAPI.deleteUser({ "pk" : appState.pk})
+        let response = await AppAPI.deleteUser({ "pk" : appState.pk}) // CALLS the DELETE route and removes user upon completion 
         if(response.status === 200){
             localStorage.clear()
             setAppState({

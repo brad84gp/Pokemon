@@ -1,14 +1,18 @@
+//  Third Party API conencting to the Pokemon.API. Fetching pokemon data with async await calls, 
+// and parsing data to specific components
+
+
+
+
 const axios = require("axios")
 
 const BASE_URL = 'https://pokeapi.co/api/v2'
-
-const { PokemonCache } = require('.././CACHE/cache')
 
 class PokemonApi {
 
 
     static async request(url, data = {}, method = 'GET'){
-        console.log('getting pokemon')
+        console.log(BASE_URL + url, data, method)
         try{
             return await axios({
                 method : method,
@@ -25,14 +29,22 @@ class PokemonApi {
     }
 
     static async fetchAllPokemon(num){
-        let cacheCheck = PokemonCache.checkCache(`pokemon?offset=${num}&limit=10`)
         
-        if(cacheCheck) return cacheCheck
-        else{
-            const response = await this.request(`pokemon?offset=${num}&limit=10`)
-            PokemonCache.addToCache(`pokemon?offset=${num}&limit=10`, response.data.results)
-            return response.data.results
+        const current = this.request(`pokemon?offset=${num}&limit=20`)
+        const next = this.request(`pokemon?offset=${num + 20}&limit=20`)
+        const prev = this.request(`pokemon?offset=${num - 20}&limit=20`) // Promise all used to fire each call asyncronosuly instead of returning each result individually
+        
+        const allPromises = Promise.all([current, next, prev])
+
+        let values = await allPromises
+     
+        let pokemonObj = {
+            'prev' : values[2].data.results,
+            'curr' : values[0].data.results,
+            'next' : values[1].data.results
         }
+
+        return pokemonObj
     }
 
     static async fetchPokemonData(id){

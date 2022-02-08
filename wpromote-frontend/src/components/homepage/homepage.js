@@ -18,13 +18,12 @@ const HomePage = () => {
     useEffect(() => {
         async function getPokemon(){
             console.log(offset)
-            let response = await PokemonApi.fetchAllPokemon(offset)
-            setPokemon(response)
+            let response = await PokemonApi.fetchAllPokemon(offset) // Response pulls prev, current, and next results to limit api calls
+            setPokemon(response)                                    // only calls api when no prev or next is available upon pagination page change
         }
 
         getPokemon()
     }, [offset])
-
 
     async function updatePokemonList(pokemonStr){
         if(pokemonStr.length > 1){
@@ -42,12 +41,29 @@ const HomePage = () => {
 
     function previousPage(){
         if(offset === 0) return null
-        setOffset(offset - 10)
+        if(pokemon.prev != null){
+            setPokemon({
+                'prev' : null,
+                'curr' : pokemon.prev,
+                'next' : pokemon.curr
+            })
+        }else{
+            setOffset(offset - 40) // adjust offset by 40 to account for premade api calls
+        }
     }
 
     function nextPage(){
         if(offset > 1118) return null
-        setOffset(offset + 10)
+        if(pokemon.next != null){
+            setPokemon({
+                'prev' : pokemon.curr,
+                'curr' : pokemon.next,
+                'next' : null
+            })
+        }else{
+            
+        setOffset(offset + 40)
+        }
     }
 
     function lastPage(){
@@ -82,7 +98,7 @@ const HomePage = () => {
                 </Row>
                 
                 <Row>
-                    {pokemon.map((el, idx) => {
+                    {pokemon.curr.map((el, idx) => {
                         return <PokemonList key={idx} name={el.name}  />
                     
                     })}
