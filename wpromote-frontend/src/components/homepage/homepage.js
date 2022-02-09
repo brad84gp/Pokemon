@@ -41,36 +41,19 @@ const HomePage = () => {
 
     function previousPage(){
         if(offset === 0) return null
-        if(pokemon.prev != null){
-            setPokemon({
-                'prev' : null,
-                'curr' : pokemon.prev,
-                'next' : pokemon.curr
-            })
-        }else{
-            setOffset(offset - 40) // adjust offset by 40 to account for premade api calls
-        }
+        setOffset(offset - 40) // adjust offset by 40 to account for premade api calls
     }
 
     function nextPage(){
         if(offset > 1118) return null
-        if(pokemon.next != null){
-            setPokemon({
-                'prev' : pokemon.curr,
-                'curr' : pokemon.next,
-                'next' : null
-            })
-        }else{
-            
         setOffset(offset + 40)
-        }
     }
 
     function lastPage(){
         if(offset != 1118 - 10) setOffset(1118 - 10)
     }
 
-
+console.log(pokemon)
 
     if(!pokemon) return <div />
     return (
@@ -98,7 +81,7 @@ const HomePage = () => {
                 </Row>
                 
                 <Row>
-                    {pokemon.curr.map((el, idx) => {
+                    {pokemon.map((el, idx) => {
                         return <PokemonList key={idx} name={el.name}  />
                     
                     })}

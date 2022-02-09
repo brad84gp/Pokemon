@@ -30,21 +30,9 @@ class PokemonApi {
 
     static async fetchAllPokemon(num){
         
-        const current = this.request(`pokemon?offset=${num}&limit=20`)
-        const next = this.request(`pokemon?offset=${num + 20}&limit=20`)
-        const prev = this.request(`pokemon?offset=${num - 20}&limit=20`) // Promise all used to fire each call asyncronosuly instead of returning each result individually
-        
-        const allPromises = Promise.all([current, next, prev])
+        const current = await this.request(`pokemon?offset=${num}&limit=20`)
 
-        let values = await allPromises
-     
-        let pokemonObj = {
-            'prev' : values[2].data.results,
-            'curr' : values[0].data.results,
-            'next' : values[1].data.results
-        }
-
-        return pokemonObj
+        return current.data.results
     }
 
     static async fetchPokemonData(id){
